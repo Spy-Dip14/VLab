@@ -1,0 +1,7 @@
+In the updated version of the code, inter-symbol interference (ISI) is simulated by adding a random amount of noise to each symbol's position during the animation. This means that the symbols will not be perfectly aligned with each other, and some symbols may overlap or appear shifted in position due to the added noise.
+
+To observe the effect of ISI, you can enter a binary data sequence into the input field and click the "Transmit" button to see the animation of the symbols being transmitted. If ISI is occurring, you should be able to see some symbols appear shifted or overlapped in position due to the added noise. This effect may be more noticeable if you enter a longer binary data sequence or if you increase the amount of noise added to each symbol.
+
+If you want to see the effect of ISI more clearly, you could modify the code to increase the amount of noise added to each symbol or to add more symbols to the animation. You could also modify the animation duration or the symbol width and spacing to see how these factors affect the visibility of ISI.
+
+In general, the effect of ISI can be observed in any transmission system where symbols are transmitted over a channel with limited bandwidth or with noise or interference. The presence of ISI can lead to errors in the received symbols, which can impact the overall performance and reliability of the system.

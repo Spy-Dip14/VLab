@@ -1,0 +1,7 @@
+In this simulation, you can see the effect of OFDM by observing the subcarriers' behavior. OFDM is a technique used to transmit data by dividing the transmission bandwidth into many subcarriers. In this simulation, each subcarrier is represented by a colored rectangle that moves up and down with a sine wave animation.
+
+When you change the number of subcarriers or subcarrier spacing, you will see changes in the animation. The subcarriers' positions will become more closely spaced when the subcarrier spacing is decreased, which simulates a higher data rate. You can also observe the subcarrier colors changing as they move up and down due to the phase shift applied to each subcarrier. This demonstrates how OFDM can use different phases to encode data on different subcarriers.
+
+Overall, the animation of the subcarriers moving up and down while changing colors represents the transmission of data using OFDM.
+
+Index(1).html

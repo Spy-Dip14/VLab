@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rayleigh Fading Simulator</title>
+	<style>
+		canvas {
+			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<h1>Rayleigh Fading Simulator</h1>
+	<p>Click the button below to simulate Rayleigh Fading.</p>
+	<button onclick="simulate()">Simulate Rayleigh Fading</button>
+	<br><br>
+	<canvas id="canvas" width="600" height="400"></canvas>
+	<p style="text-align: justify;margin-left: 40em;margin-top: -25em;"><b>
+		The experiment generates a plot of the fading curve on the canvas. The fading curve represents the amplitude of the fading channel, 
+		and if the curve shows random fluctuations over time, then it is an indication that Rayleigh fading is taking place.</b>
+	</p><br>
+	<p style="text-align: justify;margin-left: 40em;margin-top: 2em;">
+		To test Rayleigh Fading, perform the following steps:<br>
+		<ul style="margin-left: 42em;">
+			<li>Click the "Simulate Rayleigh Fading" button to generate a random fading curve.</li><br>
+			<li>Observe the fading curve and look for random fluctuations in the amplitude of the fading channel over time.</li><br>
+			<li>Repeat the steps several times to verify that the random fluctuations are consistent and follow a Rayleigh distribution.</li><br>
+			
+		</ul>
+	</p>
+	<script src="script.js"></script>
+</body>
+</html>

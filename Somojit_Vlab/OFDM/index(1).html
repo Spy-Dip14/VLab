@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OFDM Simulation</title>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      #simulation-container {
+        width: 100%;
+        height: 300px;
+        border: 1px solid black;
+        position: relative;
+        overflow: hidden;
+      }
+      .subcarrier {
+        position: absolute;
+        bottom: 0;
+        width: 20px;
+        background-color: #007bff;
+        opacity: 0.7;
+      }
+      #controls {
+        margin-top: 20px;
+        margin-left: 10em;
+      }
+      label {
+        margin-right: 10px;
+      }
+      input[type="number"] {
+        width: 50px;
+      }
+      button {
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="simulation-container"></div>
+    <div id="controls">
+      <label for="numSubcarriers">Number of Subcarriers:</label>
+      <input type="number" id="numSubcarriers" value="64" min="1" max="128">
+      <label for="subcarrierSpacing">Subcarrier Spacing:</label>
+      <input type="number" id="subcarrierSpacing" value="20" min="10" max="50">
+      <label for="subcarrierWidth">Subcarrier Width:</label>
+      <input type="number" id="subcarrierWidth" value="15" min="10" max="20">
+      <label for="animationSpeed">Animation Speed:</label>
+      <input type="number" id="animationSpeed" value="50" min="10" max="200">
+      <button id="startButton">Start Simulation</button>
+      <button id="stopButton" disabled>Stop Simulation</button>
+    </div><br>
+    <div>
+      <p style="text-align: justify;"><b>
+        In this simulation, you can see the effect of OFDM by observing the subcarriers' behavior. 
+        OFDM is a technique used to transmit data by dividing the transmission bandwidth into many subcarriers. 
+        In this simulation, each subcarrier is represented by a colored rectangle that moves up and down with a 
+        sine wave animation.</b></p>
+      <p style="text-align: justify;"><b>
+        When you change the number of subcarriers or subcarrier spacing, you will see changes in the animation. 
+        The subcarriers' positions will become more closely spaced when the subcarrier spacing is decreased, 
+        which simulates a higher data rate. You can also observe the subcarrier colors changing as they move up 
+        and down due to the phase shift applied to each subcarrier. This demonstrates how OFDM can use different 
+        phases to encode data on different subcarriers.</b></p>
+      <p style="text-align: justify;"><b>
+        Overall, the animation of the subcarriers moving up and down while changing colors represents the transmission 
+        of data using OFDM.
+      </b></p>
+    </div>
+    <script>
+      const simulationParams = {
+        numSubcarriers: 64,
+        subcarrierSpacing: 20,
+        subcarrierWidth: 15,
+        animationSpeed: 50
+      };
+
+      let subcarriers = [];
+      let subcarrierPhases = [];
+
+      const startSimulation = () => {
+        // Clear any existing subcarriers
+        subcarriers.forEach(subcarrier => subcarrier.remove());
+        subcarriers = [];
+        subcarrierPhases = [];
+
+        const simulationContainer = document.getElementById("simulation-container");
+        const containerWidth = simulationContainer.offsetWidth;
+        const containerHeight = simulationContainer.offsetHeight;
+
+        const { numSubcarriers, subcarrierSpacing, subcarrierWidth } = simulationParams;
+        const totalSubcarrierWidth = numSubcarriers * subcarrierWidth + (numSubcarriers - 1) * subcarrierSpacing;
+        const leftOffset = (containerWidth - totalSubcarrierWidth) / 2;
+
+        // Create subcarriers
+        for (let i = 0; i < numSubcarriers; i++) {
+          const subcarrier = document.createElement("div");
+          subcarrier.className = "subcarrier";
+          subcarrier.style.width = `${subcarrierWidth}px`;
+          subcarrier.style.height = `${containerHeight}px`;
+          subcarrier.style.left = `${leftOffset + i * (subcarrierWidth + subcarrierSpacing)}px`;
+          simulationContainer.appendChild(subcarrier);
+          subcarriers.push(subcarrier);
+          subcarrierPhases.push(0);
+        }
+
+        // Start animation loop
+        animateSubcarriers();
+        document.getElementById("startButton").disabled = true;
+        document.getElementById("stopButton").disabled = false;
+      };
+
+      const stopSimulation = () => {
+    // Stop animation loop
+    cancelAnimationFrame(animationFrameId);
+    document.getElementById("startButton").disabled = false;
+    document.getElementById("stopButton").disabled = true;
+  };
+
+  let animationFrameId;
+  const animateSubcarriers = () => {
+    const { animationSpeed } = simulationParams;
+
+    // Update subcarrier phases
+    for (let i = 0; i < subcarrierPhases.length; i++) {
+      subcarrierPhases[i] += i + 1;
+      subcarrierPhases[i] %= 360;
+    }
+
+    // Update subcarrier positions and colors
+    for (let i = 0; i < subcarriers.length; i++) {
+      const subcarrier = subcarriers[i];
+      const phase = subcarrierPhases[i];
+      subcarrier.style.bottom = `${50 + Math.sin(phase * (Math.PI / 180)) * 50}px`;
+      subcarrier.style.backgroundColor = `hsl(${phase}, 70%, 50%)`;
+    }
+
+    // Request next animation frame
+    animationFrameId = requestAnimationFrame(animateSubcarriers);
+  };
+
+  document.getElementById("startButton").addEventListener("click", startSimulation);
+  document.getElementById("stopButton").addEventListener("click", stopSimulation);
+
+  // Update simulation parameters when inputs change
+  document.getElementById("numSubcarriers").addEventListener("change", () => {
+    simulationParams.numSubcarriers = parseInt(document.getElementById("numSubcarriers").value);
+  });
+  document.getElementById("subcarrierSpacing").addEventListener("change", () => {
+    simulationParams.subcarrierSpacing = parseInt(document.getElementById("subcarrierSpacing").value);
+  });
+  document.getElementById("subcarrierWidth").addEventListener("change", () => {
+    simulationParams.subcarrierWidth = parseInt(document.getElementById("subcarrierWidth").value);
+  });
+  document.getElementById("animationSpeed").addEventListener("change", () => {
+    simulationParams.animationSpeed = parseInt(document.getElementById("animationSpeed").value);
+  });
+</script>
+</body>
+</html>
